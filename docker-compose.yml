@@ -3,9 +3,10 @@ version: '3'
 services:
   postgres-compose:
     image: postgres
+    container_name: pg-cep
     environment:
       POSTGRES_USER: root
-      POSTGRES_PASSWORD: pass
+      POSTGRES_PASSWORD: 123456
       POSTGRES_DB: dbcep
     ports:
-      - "5432:5432"
+      - "3306:5432"
