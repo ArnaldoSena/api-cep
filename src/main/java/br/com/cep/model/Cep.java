@@ -3,6 +3,7 @@ package br.com.cep.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -16,14 +17,9 @@ public class Cep {
 
 	@Id
 	private String cep;
-
 	private String logradouro;
-
 	private String complemento;
-
 	private String bairro;
-
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Cidade cidade;
-
 }
