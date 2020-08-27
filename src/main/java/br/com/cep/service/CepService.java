@@ -39,6 +39,8 @@ public class CepService {
             cepDTO = mapper.toDto(optionalCep.get());
         }
 
+        cepDTO.setCep(formatCep(cepDTO.getCep()));
+
         return cepDTO;
     }
 
@@ -50,11 +52,15 @@ public class CepService {
         } else {
             ceps = cepRepostory.findAllByCidade_IbgeAndCidade_Uf(ibge, uf);
         }
-        return ceps.stream().map(mapper::toDto).collect(Collectors.toList());
+        return ceps.stream().map(item -> {
+            item.setCep(formatCep(item.getCep()));
+            return mapper.toDto(item);
+        }).collect(Collectors.toList());
     }
 
     private CepDTO save(CepFeignDTO dto) {
         Cep entity = mapper.toEntity(dto);
+        entity.setCep(limparCep(entity.getCep()));
         entity = cepRepostory.save(entity);
         return mapper.toDto(entity);
     }
@@ -67,6 +73,10 @@ public class CepService {
         if (!cep.matches("[0-9]*")) {
             throw new CepInvalidoException("O CEP precisa conter apenas numeros!");
         }
+    }
+
+    private String limparCep(String cep) {
+        return cep.replace("-", "");
     }
 
     private static String formatCep(String value) {
