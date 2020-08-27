@@ -29,7 +29,7 @@ public class CepService {
         CepFeignDTO cepFeignDTO;
         CepDTO cepDTO;
         validarCep(cep);
-        cep = formatCep(cep);
+
         Optional<Cep> optionalCep = cepRepostory.findById(cep);
 
         if (!optionalCep.isPresent()) {
